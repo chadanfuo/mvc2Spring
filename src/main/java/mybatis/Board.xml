@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.board">
+	<cache />
+      <select id="boardList"  resultType="Board"  parameterType="hashmap">
+		select * from board
+		<if test="num != null">
+			WHERE num = #{num}
+		</if>
+	 </select>
+	 <select id="update_form"   parameterType="hashmap" 
+	 resultType="Board">
+		select * from board where num = #{num}
+    </select> 
+		
+	 <select id="getArticleCount"  resultType="int">
+		select count(*) from board
+	</select>
+	
+	 
+	 <select id="getArticles"  parameterType="hashmap" 
+	 resultType="Board">
+			select * from board where boardid = #{boardid} 
+			 order by ref desc, re_step  limit #{start} , #{end}
+	</select>
+	
+	<select id="insertArticle_new"  resultType="int">
+		select max(num) from board
+	</select>
+	
+	
+    
+    <select id="update_passwd"   parameterType="hashmap" 
+     resultType="string">
+		select passwd from board where num =#{num}
+    </select>
+    
+    
+    
+    <update id="update_readcount"  parameterType="hashmap">
+update board set readcount=readcount+1 where num = #{num}
+	</update> 
+	
+	
+    
+    <update id="update_update"  parameterType="hashmap">
+		update board set 
+		writer=#{writer},
+		email=#{email},
+		subject=#{subject},
+		passwd=#{passwd},
+		content=#{content} 
+		where num=#{num}
+	</update>
+    
+    <select id="delete"   parameterType="hashmap" >
+	 	delete from board where num = #{num}
+    </select>
+	<insert id="insertArticle_insert" parameterType="Board">
+		insert into board values 
+(#{num},#{writer},#{email},#{subject},#{passwd},sysdate,0,
+    #{ref},#{re_step},#{re_level},#{content},#{ip})
+	</insert>
+	
+	
+	
+	<update id="insertArticle_update"  parameterType="hashmap">
+		update board set re_step=re_step+1 where ref= #{ref} and re_step> #{re_step}
+	</update>
+	
+</mapper>
