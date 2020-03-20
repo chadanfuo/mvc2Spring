@@ -7,7 +7,7 @@
 <div class="w3-container">
 <b>글쓰기</b><br>
 
-<form method="post" name="writeform"
+<form method="post" name="writeform" enctype="multipart/form-data"
 action="${pageContext.request.contextPath}/board/write" >
 <input type="hidden"  name="num" value="${article.num }">
 <input type="hidden"  name="ref" value="${article.ref }">

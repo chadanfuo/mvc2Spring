@@ -15,6 +15,9 @@
 
 	<mvc:default-servlet-handler />
 
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"/>
+	</bean>
 
 	<mvc:view-controller path="/index" view-name="index" /><!-- 
 		컨트롤 없이 실행가능 -->
@@ -29,7 +32,7 @@
 		mapping="/images/**" cache-period="60" />
 
 
-	<bean class="mybatis.MybatisBoardDBBean">
+	<bean class="mybatis.MybatisBoardDaoMysql">
 		<property name="dbname" value="Mysql" />
 	</bean>
 

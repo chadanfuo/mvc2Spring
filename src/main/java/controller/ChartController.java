@@ -17,10 +17,10 @@ import org.springframework.stereotype.Controller;
 
 
 @Controller
-public class ChartController{
+public class ChartController {
+
 
 	public void initProcess(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
 		
 	}
 

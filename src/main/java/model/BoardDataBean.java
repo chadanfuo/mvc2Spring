@@ -2,7 +2,7 @@ package model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class BoardDataBean implements  Serializable {
+public class BoardDataBean implements  Serializable{
 
 	private int num; 
     private String writer;

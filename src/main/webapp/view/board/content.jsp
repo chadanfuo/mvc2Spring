@@ -36,6 +36,6 @@
   <input type="button" value="글삭제"  
   onclick="document.location.href='deleteForm?num=${article.num}'">&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="button" value="답글쓰기"  
-  onclick="document.location.href='writeForm?num=${article.num}&ref=${article.ref}&re_level=${article.re_level}&re_step=${article.re_step}'">&nbsp;&nbsp;&nbsp;&nbsp;
+  onclick="document.location.href='write?num=${article.num}&ref=${article.ref}&re_level=${article.re_level}&re_step=${article.re_step}'">&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="button" value="글목록" 
  onclick="document.location.href='list'"></td></tr></table></div></body></html>
