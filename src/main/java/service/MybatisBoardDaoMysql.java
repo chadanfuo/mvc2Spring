@@ -1,4 +1,4 @@
-package mybatis;
+package service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,15 +9,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import model.BoardDataBean;
 import mybatis.AbstractRepository;
 
-public class MybatisBoardDaoMysql extends AbstractRepository{
+@Component
+public class MybatisBoardDaoMysql {
 	private final String namespace = "mybatis.Board";
 	
+	@Autowired
+	public AbstractRepository opendb;
+	
 	public int getArticleCount(String boardid) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession =opendb.getSqlSessionFactory().openSession();
 		try {
 			String statement = namespace + ".getArticleCount";
 			return sqlSession.selectOne(statement, boardid);
@@ -33,14 +39,14 @@ public class MybatisBoardDaoMysql extends AbstractRepository{
 		map.put("boardid", boardid);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {			String statement = namespace + ".getArticles";
 			return sqlSession.selectList(statement, map);
 		} finally {			sqlSession.close();		}	}
 	
 	public void insertArticle(BoardDataBean article) {
 		System.out.println("insertArticle");
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		Map map = new HashMap();
 		int num = article.getNum();
 		int ref = article.getRef();
@@ -75,7 +81,7 @@ public class MybatisBoardDaoMysql extends AbstractRepository{
 		finally {			sqlSession.close();		}	}
 	
 	public BoardDataBean getArticle(int num) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		BoardDataBean article = null;
 		try {
 			
@@ -91,7 +97,7 @@ public class MybatisBoardDaoMysql extends AbstractRepository{
 	}
 
 	public BoardDataBean getUpdateArticle(int num) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		BoardDataBean article = null;
 		try {
 			article=sqlSession.selectOne(namespace+".getArticle", num);
@@ -105,7 +111,7 @@ public class MybatisBoardDaoMysql extends AbstractRepository{
 	
 
 	public int updateArticle(BoardDataBean article) throws Exception {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		String dbpasswd = "";		int x = -1;
 		try {
 			dbpasswd=sqlSession.selectOne(namespace+".getPasswd", article.getNum());
@@ -120,7 +126,7 @@ public class MybatisBoardDaoMysql extends AbstractRepository{
 
 	public int deleteArticle(int num, String passwd) throws Exception {
 		String dbpasswd=null;
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		int x =-1;
 		try {dbpasswd=sqlSession.selectOne(namespace+".getPasswd", num);
 				if (dbpasswd.equals(passwd)) {

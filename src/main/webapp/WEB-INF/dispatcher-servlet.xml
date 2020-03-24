@@ -31,11 +31,17 @@
 	<mvc:resources location="/images/, /WEB-INF/resources/"
 		mapping="/images/**" cache-period="60" />
 
-
+<!-- 
 	<bean class="mybatis.MybatisBoardDaoMysql">
 		<property name="dbname" value="Mysql" />
 	</bean>
 
+ -->
+
+
+	<bean class="mybatis.AbstractRepository">
+		<constructor-arg><value>Mysql</value></constructor-arg>
+	</bean>
 
 
 </beans>

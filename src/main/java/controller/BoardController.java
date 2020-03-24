@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 
 import model.BoardDataBean;
-import mybatis.MybatisBoardDaoMysql;
+import service.MybatisBoardDaoMysql;
 
 @Controller
 @RequestMapping("/board/")
